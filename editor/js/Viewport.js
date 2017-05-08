@@ -22,6 +22,35 @@ var Viewport = function ( editor ) {
 
 	var objects = [];
 
+    this.socket = io();
+    this.players = {};
+    thisPlayers = this.players;
+
+    this.socket.on('newPositions',function(data){
+
+        for(var i = 0 ; i < data.player.length; i++) {
+            if (thisPlayers[data.player[i].number] != undefined) {
+
+                // update position
+                thisPlayers[data.player[i].number].position.x = data.player[i].x;
+                thisPlayers[data.player[i].number].position.y = data.player[i].y;
+            }
+            else {
+
+                // create new box
+                var mesh;
+                var geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+                var material = new THREE.MeshBasicMaterial();
+                mesh = new THREE.Mesh( geometry, material );
+                scene.add( mesh );
+
+                thisPlayers[data.player[i].number] = mesh;
+            }
+        }
+
+        render();
+    });
+
 	//
 
 	var vrEffect, vrControls;
