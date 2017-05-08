@@ -30,10 +30,11 @@
     <body>
 
         <script src="client/three.min.js"></script>
+        <script src="client/OrbitControls.js"></script>
         <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
         <script>
-            var camera, scene, renderer;
+            var camera, controls, scene, renderer;
 
             var socket = io();
             var players = {};
@@ -87,13 +88,34 @@
             animate();
             function init() {
                 camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-                camera.position.z = 400;
+                camera.position.y = -400;
+                camera.position.z = 100;
+
+                camera.up.set (0, 0, 1);
+
                 scene = new THREE.Scene();
+
+                // grid
+                var size = 200, step = 20;
+                var lineGeometry = new THREE.Geometry();
+                for ( var i = - size; i <= size; i += step ) {
+                    lineGeometry.vertices.push( new THREE.Vector3( - size, i, 0 ) );
+                    lineGeometry.vertices.push( new THREE.Vector3(   size, i, 0 ) );
+                    lineGeometry.vertices.push( new THREE.Vector3( i, - size, 0 ) );
+                    lineGeometry.vertices.push( new THREE.Vector3( i,   size, 0 ) );
+                }
+                var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
+                var line = new THREE.LineSegments( lineGeometry, material );
+                scene.add( line );
+                //
 
                 renderer = new THREE.WebGLRenderer();
                 renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setClearColor (0xcccccc);
                 renderer.setSize( window.innerWidth, window.innerHeight );
                 document.body.appendChild( renderer.domElement );
+
+                controls = new THREE.OrbitControls( camera, renderer.domElement );
                 //
                 window.addEventListener( 'resize', onWindowResize, false );
             }
@@ -106,6 +128,8 @@
                 requestAnimationFrame( animate );
                 // mesh.rotation.x += 0.005;
                 // mesh.rotation.y += 0.01;
+                controls.update();
+
                 renderer.render( scene, camera );
             }
         </script>

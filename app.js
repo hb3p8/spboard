@@ -14,8 +14,8 @@ var SOCKET_LIST = {};
  
 var Entity = function(){
     var self = {
-        x:250,
-        y:250,
+        x:0,
+        y:0,
         spdX:0,
         spdY:0,
         id:"",
@@ -38,7 +38,7 @@ var Player = function(id){
     self.pressingLeft = false;
     self.pressingUp = false;
     self.pressingDown = false;
-    self.maxSpd = 10;
+    self.maxSpd = 20;
    
     var super_update = self.update;
     self.update = function(){
@@ -56,9 +56,9 @@ var Player = function(id){
             self.spdX = 0;
        
         if(self.pressingUp)
-            self.spdY = -self.maxSpd;
-        else if(self.pressingDown)
             self.spdY = self.maxSpd;
+        else if(self.pressingDown)
+            self.spdY = -self.maxSpd;
         else
             self.spdY = 0;     
     }
