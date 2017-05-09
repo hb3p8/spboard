@@ -91,6 +91,7 @@ var Editor = function () {
 	this.scene.background = new THREE.Color( 0xaaaaaa );
 
 	this.sceneHelpers = new THREE.Scene();
+	this.dynObjects = new THREE.Scene();
 
 	this.object = {};
 	this.geometries = {};

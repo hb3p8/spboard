@@ -12,7 +12,7 @@ Sidebar.Project = function ( editor ) {
 		'WebGLRenderer': THREE.WebGLRenderer,
 		'CanvasRenderer': THREE.CanvasRenderer,
 		'SVGRenderer': THREE.SVGRenderer,
-		'SoftwareRenderer': THREE.SoftwareRenderer,
+		'SoftwareRenderer': THREE.WebGLRenderer,
 		'RaytracingRenderer': THREE.RaytracingRenderer
 
 	};

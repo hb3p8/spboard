@@ -39,11 +39,17 @@ var Player = function(id){
     self.pressingLeft = false;
     self.pressingUp = false;
     self.pressingDown = false;
-    self.maxSpd = 20;
+    self.maxSpd = 8;
    
     var super_update = self.update;
     self.update = function(){
         self.updateSpd();
+
+        self.pressingRight = false;
+        self.pressingLeft = false;
+        self.pressingUp = false;
+        self.pressingDown = false;
+
         super_update();
     }
    
@@ -57,9 +63,9 @@ var Player = function(id){
             self.spdX = 0;
        
         if(self.pressingUp)
-            self.spdY = self.maxSpd;
-        else if(self.pressingDown)
             self.spdY = -self.maxSpd;
+        else if(self.pressingDown)
+            self.spdY = self.maxSpd;
         else
             self.spdY = 0;     
     }

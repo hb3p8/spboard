@@ -1,9 +1,5 @@
-<!-- TODO: grid -->
 <!-- TODO: chat -->
-<!-- TODO: camera -->
-<!-- TODO: some lighting -->
 <!-- TODO: vox import -->
-<!-- TODO: scene editing -->
 <!-- TODO: mouse controls (raycast and movement) -->
 <!-- TODO: simple physics -->
 <!-- TODO: hit point indication and control -->
@@ -46,13 +42,15 @@
 
                         // update position
                         players[data.player[i].number].position.x = data.player[i].x;
-                        players[data.player[i].number].position.y = data.player[i].y;
+                        players[data.player[i].number].position.z = data.player[i].y;
+
+                        players[data.player[i].number].position.y = 5;
                     }
                     else {
 
                         // create new box
                         var mesh;
-                        var geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+                        var geometry = new THREE.BoxBufferGeometry( 8, 8, 8 );
                         var material = new THREE.MeshBasicMaterial();
                         mesh = new THREE.Mesh( geometry, material );
                         scene.add( mesh );
@@ -88,26 +86,13 @@
             animate();
             function init() {
                 camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-                camera.position.y = -400;
-                camera.position.z = 100;
-
-                camera.up.set (0, 0, 1);
+                camera.position.z = 50;
+                camera.position.y = 10;
 
                 scene = new THREE.Scene();
 
-                // grid
-                var size = 200, step = 20;
-                var lineGeometry = new THREE.Geometry();
-                for ( var i = - size; i <= size; i += step ) {
-                    lineGeometry.vertices.push( new THREE.Vector3( - size, i, 0 ) );
-                    lineGeometry.vertices.push( new THREE.Vector3(   size, i, 0 ) );
-                    lineGeometry.vertices.push( new THREE.Vector3( i, - size, 0 ) );
-                    lineGeometry.vertices.push( new THREE.Vector3( i,   size, 0 ) );
-                }
-                var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
-                var line = new THREE.LineSegments( lineGeometry, material );
-                scene.add( line );
-                //
+                var grid = new THREE.GridHelper(60, 60);
+                scene.add(grid);
 
                 renderer = new THREE.WebGLRenderer();
                 renderer.setPixelRatio( window.devicePixelRatio );

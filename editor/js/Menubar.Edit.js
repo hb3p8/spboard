@@ -86,7 +86,7 @@ Menubar.Edit = function ( editor ) {
 
 	var option = new UI.Row();
 	option.setClass( 'option' );
-	option.setTextContent( 'Clone' );
+	option.setTextContent( 'Clone (Ctrl+Shift+D)' );
 	option.onClick( function () {
 
 		var object = editor.selected;

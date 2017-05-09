@@ -14,6 +14,7 @@
 		<script src="examples/js/libs/system.min.js"></script>
 
 		<script src="examples/js/controls/EditorControls.js"></script>
+		<script src="examples/js/controls/OrbitControls.js"></script>
 		<script src="examples/js/controls/TransformControls.js"></script>
 
 		<script src="examples/js/libs/jszip.min.js"></script>
@@ -317,6 +318,22 @@
 						} else if ( event.ctrlKey ) {
 
 							editor.undo();
+
+						}
+
+						break;
+
+					case 68: // Register Ctrl-Shift-D for Clone
+
+						if ( event.ctrlKey && event.shiftKey ) {
+
+							var object = editor.selected;
+
+							if ( object.parent === null ) return; // avoid cloning the camera or scene
+
+							object = object.clone();
+
+							editor.execute( new AddObjectCommand( object ) );
 
 						}
 
