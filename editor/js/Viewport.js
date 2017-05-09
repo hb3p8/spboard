@@ -89,6 +89,8 @@ var Viewport = function(editor) {
     var objectScaleOnDown = null;
 
     var transformControls = new THREE.TransformControls(camera, container.dom);
+    transformControls.setTranslationSnap(8.0);
+    transformControls.setRotationSnap(5.0 / 180.0 * 3.141592);
     transformControls.addEventListener('change', function() {
 
         var object = transformControls.object;
@@ -640,20 +642,20 @@ var Viewport = function(editor) {
             camera.updateMatrixWorld();
 
             vrEffect.render(scene, vrCamera);
-            vrEffect.render(sceneHelpers, vrCamera);
             vrEffect.render(dynObjects, vrCamera);
+            vrEffect.render(sceneHelpers, vrCamera);
 
         } else {
 
             renderer.render(scene, camera);
+
+            renderer.render(dynObjects, camera);
 
             if (renderer instanceof THREE.RaytracingRenderer === false) {
 
                 renderer.render(sceneHelpers, camera);
 
             }
-
-            renderer.render(dynObjects, camera);
         }
 
 
